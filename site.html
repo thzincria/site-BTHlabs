@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>BHTLabs</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f8f7fb;
+      color: #3c3c3c;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    header {
+      background: linear-gradient(135deg, #6f4fff, #a385ff);
+      color: white;
+      padding: 30px 20px;
+      text-align: center;
+      box-shadow: 0 5px 20px rgba(111, 79, 255, 0.3);
+      animation: fadeInDown 0.8s ease forwards;
+      user-select: none;
+    }
+    header h1 {
+      font-weight: 800;
+      font-size: 2.8rem;
+      letter-spacing: 1.5px;
+      margin-bottom: 5px;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    }
+    header p {
+      font-weight: 500;
+      font-size: 1.2rem;
+      color: #d9d5ffcc;
+      letter-spacing: 0.05em;
+    }
+
+    nav {
+      background: #5a3fff;
+      display: flex;
+      justify-content: center;
+      gap: 25px;
+      padding: 14px 0;
+      box-shadow: inset 0 -3px 8px rgba(0,0,0,0.2);
+      animation: fadeIn 1s ease forwards;
+      user-select: none;
+    }
+    nav a {
+      color: #cfcaffcc;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1.15rem;
+      padding: 8px 18px;
+      border-radius: 12px;
+      transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+      box-shadow: inset 0 0 0 0 transparent;
+    }
+    nav a.active, nav a:hover {
+      color: white;
+      background-color: #8e75ff;
+      box-shadow: 0 6px 12px rgba(142, 117, 255, 0.6);
+    }
+    nav a:focus-visible {
+      outline: 3px solid #b3a3ff;
+      outline-offset: 2px;
+    }
+
+    main {
+      flex-grow: 1;
+      max-width: 820px;
+      margin: 40px auto 100px;
+      padding: 0 15px;
+      animation: fadeInUp 1s ease forwards;
+      user-select: text;
+    }
+
+    section {
+      background: white;
+      padding: 36px 32px;
+      border-radius: 22px;
+      box-shadow: 0 10px 30px rgba(111, 79, 255, 0.08);
+      margin-bottom: 36px;
+      text-align: center;
+      color: #555;
+      transition: box-shadow 0.35s ease, transform 0.35s ease;
+      display: none;
+    }
+    section.active {
+      display: block;
+      animation: fadeInContent 0.6s ease forwards;
+    }
+    section:hover {
+      box-shadow: 0 14px 38px rgba(111, 79, 255, 0.18);
+      transform: translateY(-4px);
+    }
+    section h3 {
+      font-size: 2.2rem;
+      margin-bottom: 18px;
+      color: #5e3fff;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+    section p {
+      font-size: 1.15rem;
+      line-height: 1.6;
+      color: #666;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .intro h2 {
+      font-weight: 700;
+      font-size: 2.5rem;
+      margin-bottom: 12px;
+      color: #5e3fff;
+      letter-spacing: 0.04em;
+    }
+    .intro p {
+      font-weight: 500;
+      font-size: 1.2rem;
+      color: #7b72ffcc;
+      max-width: 480px;
+      margin: 0 auto;
+      line-height: 1.5;
+    }
+
+    .example img {
+      max-width: 100%;
+      border-radius: 18px;
+      box-shadow: 0 14px 40px rgba(111, 79, 255, 0.25);
+      margin-top: 28px;
+      cursor: pointer;
+      transition: transform 0.45s ease, box-shadow 0.45s ease;
+    }
+    .example img:hover {
+      transform: scale(1.05);
+      box-shadow: 0 22px 48px rgba(111, 79, 255, 0.45);
+    }
+
+    footer {
+      background: linear-gradient(135deg, #6f4fff, #a385ff);
+      color: #e8e6ffdd;
+      text-align: center;
+      padding: 20px 15px;
+      box-shadow: 0 -5px 15px rgba(111, 79, 255, 0.4);
+      position: fixed;
+      width: 100%;
+      bottom: 0;
+      font-size: 0.9rem;
+      font-weight: 600;
+      user-select: none;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.5s ease;
+    }
+    footer.visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    footer p {
+      margin-bottom: 8px;
+      letter-spacing: 0.03em;
+      text-shadow: 0 1px 4px rgba(0,0,0,0.12);
+    }
+    .social {
+      margin-top: 4px;
+    }
+    .social a {
+      display: inline-flex;
+      align-items: center;
+      color: #e8e6ffdd;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 1rem;
+      gap: 8px;
+      transition: color 0.3s ease;
+    }
+    .social a:hover {
+      color: #fff;
+    }
+    .social img {
+      width: 30px;
+      height: 30px;
+      filter: drop-shadow(0 0 2px rgba(0,0,0,0.12));
+    }
+
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-30px);}
+      to { opacity: 1; transform: translateY(0);}
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px);}
+      to { opacity: 1; transform: translateY(0);}
+    }
+    @keyframes fadeIn {
+      from { opacity: 0;}
+      to { opacity: 1;}
+    }
+    @keyframes fadeInContent {
+      from {opacity: 0; transform: translateY(10px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+
+    @media (max-width: 480px) {
+      nav {
+        gap: 12px;
+      }
+      nav a {
+        font-size: 1rem;
+        padding: 6px 14px;
+      }
+      header h1 {
+        font-size: 2.2rem;
+      }
+      main {
+        margin: 30px 12px 90px;
+      }
+      section {
+        padding: 28px 20px;
+      }
+      section h3 {
+        font-size: 1.8rem;
+      }
+      .intro h2 {
+        font-size: 2rem;
+      }
+      .intro p {
+        font-size: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>BHTLabs</h1>
+    <p>Inovando com tecnologia</p>
+  </header>
+
+  <nav>
+    <a href="#" class="tab-link active" data-tab="inicio" aria-selected="true" role="tab">Início</a>
+    <a href="#" class="tab-link" data-tab="sobre" aria-selected="false" role="tab">Sobre</a>
+    <a href="#" class="tab-link" data-tab="servicos" aria-selected="false" role="tab">Serviços</a>
+    <a href="#" class="tab-link" data-tab="exemplo" aria-selected="false" role="tab">Exemplo</a>
+    <a href="#" class="tab-link" data-tab="contato" aria-selected="false" role="tab">Contato</a>
+  </nav>
+
+  <main role="tabpanel" tabindex="0">
+    <section id="inicio" class="active" role="tabpanel" aria-label="Início">
+      <div class="intro">
+        <h2>Bem-vindo à BHTLabs</h2>
+        <p>Seu parceiro em soluções criativas e tecnológicas.</p>
+      </div>
+    </section>
+
+    <section id="sobre" role="tabpanel" aria-label="Sobre" tabindex="-1">
+      <h3>Sobre Nós</h3>
+      <p>A BHTLabs é dedicada a entregar inovação e qualidade em tecnologia e design, ajudando marcas a crescer e se destacar.</p>
+    </section>
+
+    <section id="servicos" role="tabpanel" aria-label="Serviços" tabindex="-1">
+      <h3>O que fazemos</h3>
+      <p>Na BHTLabs, somos especialistas em <strong>design gráfico</strong>. Oferecemos serviços de criação de <strong>logos</strong>, <strong>flyers</strong>, cartões de visita e muito mais para destacar sua marca no mercado.</p>
+    </section>
+
+    <section id="exemplo" class="example" role="tabpanel" aria-label="Exemplo de projeto" tabindex="-1">
+      <h3>Exemplo de Projeto</h3>
+      <img src="img/exemplo-de-imagem.png" alt="Exemplo de projeto gráfico BHTLabs" />
+    </section>
+
+    <section id="contato" role="tabpanel" aria-label="Contato" tabindex="-1">
+      <h3>Contato</h3>
+      <p>Entre em contato conosco pelo Instagram ou pelo formulário abaixo.</p>
+      <p><a href="https://www.instagram.com/bht_labs/" target="_blank" rel="noopener noreferrer">@bht_labs</a></p>
+      <p>Email: contatobhtlabs@gmail.com</p>
+    </section>
+  </main>
+
+  <footer id="footer">
+    <p>&copy; 2025 BHTLabs. Todos os direitos reservados.</p>
+    <div class="social">
+      <a href="https://www.instagram.com/bht_labs/" target="_blank" rel="noopener noreferrer" aria-label="Instagram BHTLabs">
+        <img src="https://static.vecteezy.com/system/resources/thumbnails/038/447/961/small/ai-generated-instagram-logo-free-png.png" alt="Ícone Instagram" />@bht_labs
+      </a>
+    </div>
+  </footer>
+
+  <script>
+    const tabs = document.querySelectorAll('.tab-link');
+    const sections = document.querySelectorAll('main section');
+    const footer = document.getElementById('footer');
+
+    function activateTab(tab) {
+      tabs.forEach(t => {
+        t.classList.remove('active');
+        t.setAttribute('aria-selected', 'false');
+      });
+      sections.forEach(sec => {
+        sec.classList.remove('active');
+        sec.setAttribute('tabindex', '-1');
+      });
+
+      tab.classList.add('active');
+      tab.setAttribute('aria-selected', 'true');
+
+      const tabId = tab.getAttribute('data-tab');
+      const activeSection = document.getElementById(tabId);
+      activeSection.classList.add('active');
+      activeSection.setAttribute('tabindex', '0');
+      activeSection.focus();
+
+      window.scrollTo({ top: 0, behavior: 'instant' });
+    }
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', e => {
+        e.preventDefault();
+        activateTab(tab);
+      });
+      tab.addEventListener('keydown', e => {
+        if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+          e.preventDefault();
+          let idx = Array.from(tabs).indexOf(tab);
+          if (e.key === 'ArrowRight') idx = (idx + 1) % tabs.length;
+          if (e.key === 'ArrowLeft') idx = (idx - 1 + tabs.length) % tabs.length;
+          tabs[idx].focus();
+        }
+      });
+    });
+
+    function toggleFooter() {
+      const scrollBottom = window.innerHeight + window.scrollY >= document.body.offsetHeight - 5;
+      footer.classList.toggle('visible', scrollBottom);
+    }
+
+    document.addEventListener('scroll', toggleFooter);
+    window.addEventListener('resize', toggleFooter);
+    window.addEventListener('load', toggleFooter);
+  </script>
+</body>
+</html>
